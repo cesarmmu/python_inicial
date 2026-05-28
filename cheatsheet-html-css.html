@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cheatsheet HTML & CSS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --panel: #16140f;
+    --panel-2: #1d1a13;
+    --ink: #f4ede1;
+    --muted: #9a917f;
+    --amber: #e8a13a;
+    --coral: #e8674c;
+    --mint: #6fcf97;
+    --sky: #62b6cb;
+    --violet: #b794f6;
+    --line: #2b271d;
+    --mono: 'Space Mono', monospace;
+    --sans: 'Outfit', sans-serif;
+    --display: 'Fraunces', serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.6;
+    background-image:
+      radial-gradient(circle at 15% 10%, rgba(232,161,58,.07), transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(98,182,203,.06), transparent 45%);
+  }
+  ::selection { background: var(--amber); color: #000; }
+
+  /* HEADER */
+  header {
+    padding: 80px 7vw 50px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: "</>";
+    position: absolute;
+    right: 5vw; top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--mono);
+    font-size: clamp(80px, 18vw, 240px);
+    color: var(--panel-2);
+    z-index: 0;
+    user-select: none;
+  }
+  .tag {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--amber);
+    position: relative; z-index: 1;
+  }
+  h1 {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: clamp(46px, 9vw, 110px);
+    line-height: 0.95;
+    letter-spacing: -2px;
+    margin: 12px 0;
+    position: relative; z-index: 1;
+  }
+  h1 em { color: var(--coral); font-style: italic; }
+  header p {
+    color: var(--muted);
+    max-width: 460px;
+    position: relative; z-index: 1;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0;
+    z-index: 50;
+    background: rgba(15,14,12,.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 7vw;
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  nav a {
+    font-family: var(--mono);
+    font-size: 12px;
+    text-decoration: none;
+    color: var(--muted);
+    padding: 5px 12px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    transition: all .2s;
+  }
+  nav a:hover { color: var(--bg); background: var(--amber); border-color: var(--amber); }
+
+  /* LAYOUT */
+  main { padding: 60px 7vw 120px; }
+  section { margin-bottom: 80px; scroll-margin-top: 80px; }
+  .sec-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 28px; }
+  .sec-num {
+    font-family: var(--mono);
+    color: var(--amber);
+    font-size: 14px;
+  }
+  h2 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(28px, 4vw, 44px);
+    letter-spacing: -1px;
+  }
+  .sec-head::after {
+    content: ""; flex: 1; height: 1px;
+    background: var(--line); align-self: center;
+  }
+
+  .grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 22px;
+    transition: border-color .25s, transform .25s;
+  }
+  .card:hover { border-color: var(--amber); transform: translateY(-3px); }
+  .card h3 {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 17px;
+    margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card h3 .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--coral); }
+
+  pre {
+    background: #0a0907;
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--mint);
+    border-radius: 8px;
+    padding: 14px;
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: #d8d0c0;
+    margin: 8px 0;
+  }
+  pre + p, p + pre { margin-top: 10px; }
+  .c-tag { color: var(--coral); }
+  .c-attr { color: var(--amber); }
+  .c-val { color: var(--mint); }
+  .c-prop { color: var(--sky); }
+  .c-com { color: var(--muted); font-style: italic; }
+  .c-sel { color: var(--violet); }
+
+  code.inline {
+    font-family: var(--mono);
+    background: var(--panel-2);
+    color: var(--amber);
+    padding: 2px 7px;
+    border-radius: 5px;
+    font-size: 12.5px;
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  table th {
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--amber);
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  table td {
+    padding: 9px 10px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  table td:first-child { font-family: var(--mono); color: var(--sky); white-space: nowrap; }
+  table tr:hover td { background: var(--panel-2); }
+
+  .full { grid-column: 1 / -1; }
+
+  footer {
+    padding: 40px 7vw;
+    border-top: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+  }
+  footer .amber { color: var(--amber); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="tag">Referencia rápida · Frontend</div>
+  <h1>HTML <em>&amp;</em> CSS<br>Cheatsheet</h1>
+  <p>Todo lo esencial de maquetado y estilos en una sola página. Estructura, semántica, flexbox, grid, animaciones y más.</p>
+</header>
+
+<nav>
+  <a href="#estructura">Estructura</a>
+  <a href="#semantica">Semántica</a>
+  <a href="#texto">Texto</a>
+  <a href="#formularios">Formularios</a>
+  <a href="#multimedia">Multimedia</a>
+  <a href="#selectores">Selectores</a>
+  <a href="#box">Box Model</a>
+  <a href="#flexbox">Flexbox</a>
+  <a href="#grid">Grid</a>
+  <a href="#posicion">Posición</a>
+  <a href="#tipografia">Tipografía</a>
+  <a href="#colores">Colores</a>
+  <a href="#transiciones">Transiciones</a>
+  <a href="#responsive">Responsive</a>
+  <a href="#variables">Variables</a>
+  <a href="#trucos">Trucos</a>
+</nav>
+
+<main>
+
+<!-- ESTRUCTURA -->
+<section id="estructura">
+  <div class="sec-head"><span class="sec-num">01</span><h2>Estructura base</h2></div>
+  <div class="grid">
+    <div class="card">
+      <h3><span class="dot"></span>Documento HTML5</h3>
+<pre>&lt;<span class="c-tag">!DOCTYPE html</span>&gt;
+&lt;<span class="c-tag">html</span> <span class="c-attr">lang</span>=<span class="c-val">"es"</span>&gt;
+&lt;<span class="c-tag">head</span>&gt;
+  &lt;<span class="c-tag">meta</span> <span class="c-attr">charset</span>=<span class="c-val">"UTF-8"</span>&gt;
+  &lt;<span class="c-tag">meta</span> <span class="c-attr">name</span>=<span class="c-val">"viewport"</span>
+    <span class="c-attr">content</span>=<span class="c-val">"width=device-width, initial-scale=1.0"</span>&gt;
+  &lt;<span class="c-tag">title</span>&gt;Mi página&lt;/<span class="c-tag">title</span>&gt;
+  &lt;<span class="c-tag">link</span> <span class="c-attr">rel</span>=<span class="c-val">"stylesheet"</span> <span class="c-attr">href</span>=<span class="c-val">"style.css"</span>&gt;
+&lt;/<span class="c-tag">head</span>&gt;
+&lt;<span class="c-tag">body</span>&gt;
+  <span class="c-com">&lt;!-- contenido --&gt;</span>
+  &lt;<span class="c-tag">script</span> <span class="c-attr">src</span>=<span class="c-val">"app.js"</span>&gt;&lt;/<span class="c-tag">script</span>&gt;
+&lt;/<span class="c-tag">body</span>&gt;
+&lt;/<span class="c-tag">html</span>&gt;</pre>
+    </div>
+    <div class="card">
+      <h3><span class="dot"></span>Metaetiquetas útiles</h3>
+<pre>&lt;<span class="c-tag">meta</span> <span class="c-attr">name</span>=<span class="c-val">"description"</span> <span class="c-attr">content</span>=<span class="c-val">"..."</span>&gt;
+&lt;<span class="c-tag">meta</span> <span class="c-attr">name</span>=<span class="c-val">"author"</span> <span class="c-attr">content</span>=<span class="c-val">"..."</span>&gt;
+
+<span class="c-com">&lt;!-- Open Graph (redes) --&gt;</span>
+&lt;<span class="c-tag">meta</span> <span class="c-attr">property</span>=<span class="c-val">"og:title"</span> <span class="c-attr">content</span>=<span class="c-val">"..."</span>&gt;
+&lt;<span class="c-tag">meta</span> <span class="c-attr">property</span>=<span class="c-val">"og:image"</span> <span class="c-attr">content</span>=<span class="c-val">"..."</span>&gt;
+
+<span class="c-com">&lt;!-- Favicon --&gt;</span>
+&lt;<span class="c-tag">link</span> <span class="c-attr">rel</span>=<span class="c-val">"icon"</span> <span class="c-attr">href</span>=<span class="c-val">"favicon.ico"</span>&gt;</pre>
+    </div>
+  </div>
+</section>
+
+<!-- SEMANTICA -->
+<section id="semantica">
+  <div class="sec-head"><span class="sec-num">02</span><h2>Etiquetas semánticas</h2></div>
+  <div class="grid">
+    <div class="card full">
+      <table>
+        <tr><th>Etiqueta</th><th>Uso</th></tr>
+        <tr><td>&lt;header&gt;</td><td>Cabecera de página o sección (logo, navegación principal)</td></tr>
+        <tr><td>&lt;nav&gt;</td><td>Bloque de enlaces de navegación</td></tr>
+        <tr><td>&lt;main&gt;</td><td>Contenido principal único de la página</td></tr>
+        <tr><td>&lt;section&gt;</td><td>Sección temática con su propio encabezado</td></tr>
+        <tr><td>&lt;article&gt;</td><td>Contenido autónomo y reutilizable (post, tarjeta)</td></tr>
+        <tr><td>&lt;aside&gt;</td><td>Contenido relacionado (sidebar, anuncios)</td></tr>
+        <tr><td>&lt;footer&gt;</td><td>Pie de página o sección</td></tr>
+        <tr><td>&lt;figure&gt; / &lt;figcaption&gt;</td><td>Imagen/ilustración con su leyenda</td></tr>
+        <tr><td>&lt;time&gt;</td><td>Fecha u hora: <code class="inline">datetime="2026-05-28"</code></td></tr>
+        <tr><td>&lt;mark&gt;</td><td>Texto resaltado/destacado</td></tr>
+        <tr><td>&lt;details&gt; / &lt;summary&gt;</td><td>Acordeón nativo desplegable</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- TEXTO -->
+<section id="texto">
+  <div class="sec-head"><span class="sec-num">03</span><h2>Texto y listas</h2></div>
+  <div class="grid">
+    <div class="card">
+      <h3><span class="dot"></span>Texto</h3>
+<pre>&lt;<span class="c-tag">h1</span>&gt;...&lt;/<span class="c-tag">h1</span>&gt; <span class="c-com">// h1 a h6</span>
+&lt;<span class="c-tag">p</span>&gt;Párrafo&lt;/<span class="c-tag">p</span>&gt;
+&lt;<span class="c-tag">strong</span>&gt;negrita&lt;/<span class="c-tag">strong</span>&gt;
+&lt;<span class="c-tag">em</span>&gt;cursiva&lt;/<span class="c-tag">em</span>&gt;
+&lt;<span class="c-tag">br</span>&gt; <span class="c-com">// salto de línea</span>
+&lt;<span class="c-tag">hr</span>&gt; <span class="c-com">// línea horizontal</span>
+&lt;<span class="c-tag">a</span> <span class="c-attr">href</span>=<span class="c-val">"#"</span> <span class="c-attr">target</span>=<span class="c-val">"_blank"</span>&gt;link&lt;/<span class="c-tag">a</span>&gt;
+&lt;<span class="c-tag">code</span>&gt;código&lt;/<span class="c-tag">code</span>&gt;
+&lt;<span class="c-tag">blockquote</span>&gt;cita&lt;/<span class="c-tag">blockquote</span>&gt;</pre>
+    </div>
+    <div class="card">
+      <h3><span class="dot"></span>Listas y tablas</h3>
+<pre>&lt;<span class="c-tag">ul</span>&gt;&lt;<span class="c-tag">li</span>&gt;sin orden&lt;/<span class="c-tag">li</span>&gt;&lt;/<span class="c-tag">ul</span>&gt;
+&lt;<span class="c-tag">ol</span>&gt;&lt;<span class="c-tag">li</span>&gt;ordenada&lt;/<span class="c-tag">li</span>&gt;&lt;/<span class="c-tag">ol</span>&gt;
+&lt;<span class="c-tag">dl</span>&gt;
+  &lt;<span class="c-tag">dt</span>&gt;Término&lt;/<span class="c-tag">dt</span>&gt;
+  &lt;<span class="c-tag">dd</span>&gt;Definición&lt;/<span class="c-tag">dd</span>&gt;
+&lt;/<span class="c-tag">dl</span>&gt;
+
+&lt;<span class="c-tag">table</span>&gt;
+  &lt;<span class="c-tag">thead</span>&gt;&lt;<span class="c-tag">tr</span>&gt;&lt;<span class="c-tag">th</span>&gt;A&lt;/<span class="c-tag">th</span>&gt;&lt;/<span class="c-tag">tr</span>&gt;&lt;/<span class="c-tag">thead</span>&gt;
+  &lt;<span class="c-tag">tbody</span>&gt;&lt;<span class="c-tag">tr</span>&gt;&lt;<span class="c-tag">td</span>&gt;1&lt;/<span class="c-tag">td</span>&gt;&lt;/<span class="c-tag">tr</span>&gt;&lt;/<span class="c-tag">tbody</span>&gt;
+&lt;/<span class="c-tag">table</span>&gt;</pre>
+    </div>
+  </div>
+</section>
+
+<!-- FORMULARIOS -->
+<section id="formularios">
+  <div class="sec-head"><span class="sec-num">04</span><h2>Formularios</h2></div>
+  <div class="grid">
+    <div class="card">
+      <h3><span class="dot"></span>Estructura</h3>
+<pre>&lt;<span class="c-tag">form</span> <span class="c-attr">action</span>=<span class="c-val">"/api"</span> <span class="c-attr">method</span>=<span class="c-val">"POST"</span>&gt;
+  &lt;<span class="c-tag">label</span> <span class="c-attr">for</span>=<span class="c-val">"email"</span>&gt;Email&lt;/<span class="c-tag">label</span>&gt;
+  &lt;<span class="c-tag">input</span> <span class="c-attr">type</span>=<span class="c-val">"email"</span> <span class="c-attr">id</span>=<span class="c-val">"email"</span>
+    <span class="c-attr">name</span>=<span class="c-val">"email"</span> <span class="c-attr">required</span>&gt;
+
+  &lt;<span class="c-tag">textarea</span> <span class="c-attr">rows</span>=<span class="c-val">"4"</span>&gt;&lt;/<span class="c-tag">textarea</span>&gt;
+
+  &lt;<span class="c-tag">select</span>&gt;
+    &lt;<span class="c-tag">option</span> <span class="c-attr">value</span>=<span class="c-val">"1"</span>&gt;Uno&lt;/<span class="c-tag">option</span>&gt;
+  &lt;/<span class="c-tag">select</span>&gt;
+
+  &lt;<span class="c-tag">button</span> <span class="c-attr">type</span>=<span class="c-val">"submit"</span>&gt;Enviar&lt;/<span class="c-tag">button</span>&gt;
+&lt;/<span class="c-tag">form</span>&gt;</pre>
+    </div>
+    <div class="card">
+      <h3><span class="dot"></span>Tipos de input</h3>
+      <table>
+        <tr><td>text</td><td>Texto libre</td></tr>
+        <tr><td>email</td><td>Valida formato correo</td></tr>
+        <tr><td>password</td><td>Oculta caracteres</td></tr>
+        <tr><td>number</td><td>Numérico (min/max/step)</td></tr>
+        <tr><td>date</td><td>Selector de fecha</td></tr>
+        <tr><td>checkbox</td><td>Casilla múltiple</td></tr>
+        <tr><td>radio</td><td>Opción única (mismo name)</td></tr>
+        <tr><td>range</td><td>Deslizador</td></tr>
+        <tr><td>file</td><td>Subida de archivos</td></tr>
+        <tr><td>color</td><td>Selector de color</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3><span class="dot"></span>Atributos de validación</h3>
+      <table>
+        <tr><td>required</td><td>Campo obligatorio</td></tr>
+        <tr><td>placeholder</td><td>Texto de ayuda</td></tr>
+        <tr><td>pattern</td><td>Regex de validación</td></tr>
+        <tr><td>min / max</td><td>Rango de valores</td></tr>
+        <tr><td>minlength</td><td>Longitud mínima</td></tr>
+        <tr><td>disabled</td><td>Campo deshabilitado</td></tr>
+        <tr><td>readonly</td><td>Solo lectura</td></tr>
+        <tr><td>autocomplete</td><td>Autocompletado</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- MULTIMEDIA -->
+<section id="multimedia">
+  <div class="sec-head"><span class="sec-num">05</span><h2>Multimedia</h2></div>
+  <div class="grid">
+    <div class="card">
+      <h3><span class="dot"></span>Imagen responsive</h3>
+<pre>&lt;<span class="c-tag">img</span> <span class="c-attr">src</span>=<span class="c-val">"foto.jpg"</span> <span class="c-attr">alt</span>=<span class="c-val">"texto"</span>
+  <span class="c-attr">loading</span>=<span class="c-val">"lazy"</span> <span class="c-attr">width</span>=<span class="c-val">"600"</span>&gt;
+
+&lt;<span class="c-tag">picture</span>&gt;
+  &lt;<span class="c-tag">source</span> <span class="c-attr">srcset</span>=<span class="c-val">"big.webp"</span>
+    <span class="c-attr">media</span>=<span class="c-val">"(min-width:800px)"</span>&gt;
+  &lt;<span class="c-tag">img</span> <span class="c-attr">src</span>=<span class="c-val">"small.jpg"</span> <span class="c-attr">alt</span>=<span class="c-val">""</span>&gt;
+&lt;/<span class="c-tag">picture</span>&gt;</pre>
+    </div>
+    <div class="card">
+      <h3><span class="dot"></span>Video y audio</h3>
+<pre>&lt;<span class="c-tag">video</span> <span class="c-attr">controls</span> <span class="c-attr">muted</span> <span class="c-attr">loop</span>&gt;
+  &lt;<span class="c-tag">source</span> <span class="c-attr">src</span>=<span class="c-val">"v.mp4"</span> <span class="c-attr">type</span>=<span class="c-val">"video/mp4"</span>&gt;
+&lt;/<span class="c-tag">video</span>&gt;
+
+&lt;<span class="c-tag">audio</span> <span class="c-attr">controls</span> <span class="c-attr">src</span>=<span class="c-val">"a.mp3"</span>&gt;&lt;/<span class="c-tag">audio</span>&gt;
+
+&lt;<span class="c-tag">iframe</span> <span class="c-attr">src</span>=<span class="c-val">"..."</span>
+  <span class="c-attr">loading</span>=<span class="c-val">"lazy"</span>&gt;&lt;/<span class="c-tag">iframe</span>&gt;</pre>
+    </div>
+  </div>
+</section>
+
+<!-- SELECTORES -->
+<section id="selectores">
+  <div class="sec-head"><span class="sec-num">06</span><h2>Selectores CSS</h2></div>
+  <div class="grid">
+    <div class="card">
+      <h3><span class="dot"></span>Básicos</h3>
+      <table>
+        <tr><td>*</td><td>Todos los elementos</td></tr>
+        <tr><td>.clase</td><td>Por clase</td></tr>
+        <tr><td>#id</td><td>Por id</td></tr>
+        <tr><td>div</td><td>Por etiqueta</td></tr>
+        <tr><td>a, p</td><td>Agrupación</td></tr>
+        <tr><td>[attr="x"]</td><td>Por atributo</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3><span class="dot"></span>Combinadores</h3>
+      <table>
+        <tr><td>A B</td><td>B descendiente de A</td></tr>
+        <tr><td>A &gt; B</td><td>B hijo directo de A</td></tr>
+        <tr><td>A + B</td><td>B hermano inmediato</td></tr>
+        <tr><td>A ~ B</td><td>Todos los hermanos B</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3><span class="dot"></span>Pseudo-clases / elementos</h3>
+      <table>
+        <tr><td>:hover</td><td>Al pasar el ratón</td></tr>
+        <tr><td>:focus</td><td>Con foco</td></tr>
+        <tr><td>:nth-child(n)</td><td>Hijo n-ésimo</td></tr>
+        <tr><td>:first / :last-child</td><td>Primero / último</td></tr>
+        <tr><td>:not(sel)</td><td>Negación</td></tr>
+        <tr><td>:checked</td><td>Marcado</td></tr>
+        <tr><td>::before / ::after</td><td>Contenido generado</td></tr>
+        <tr><td>::placeholder</td><td>Estilo del placeholder</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="grid" style="margin-top:18px">
+    <div class="card full">
+      <h3><span class="dot"></span>Especificidad (de mayor a menor)</h3>
+      <p style="color:var(--muted);font-size:14px">
+        <code class="inline">!important</code> &gt; estilos en línea (1000) &gt;
+        <code class="inline">#id</code> (100) &gt;
+        <code class="inline">.clase / :pseudo / [attr]</code> (10) &gt;
+        <code class="inline">etiqueta / ::pseudo-elemento</code> (1)
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- BOX MODEL -->
+<section id="box">
+  <div class="sec-head"><span class="sec-num">07</span><h2>Box Model</h2></div>
+  <div class="grid">
+    <div class="card">
+      <h3><span class="dot"></span>Reset recomendado</h3>
+<pre><span class="c-sel">*, *::before, *::after</span> {
+  <span class="c-prop">box-sizing</span>: border-box;
+  <span class="c-prop">margin</span>: 0;
+  <span class="c-prop">padding</span>: 0;
+}</pre>
+      <p style="color:var(--muted);font-size:13px;margin-top:8px"><code class="inline">border-box</code>: el width incluye padding y borde.</p>
+    </div>
+    <div class="card">
+      <h3><span class="dot"></span>Espaciado y bordes</h3>
+<pre><span class="c-prop">margin</span>: 10px 20px; <span class="c-com">// vert horiz</span>
+<span class="c-prop">padding</span>: 8px 16px 8px 16px;
+  <span class="c-com">// arriba der abajo izq</span>
+<span class="c-prop">border</span>: 2px solid #000;
+<span class="c-prop">border-radius</span>: 12px;
+<span class="c-prop">outline</span>: 2px dashed red;
+<span class="c-prop">box-shadow</span>: 0 4px 12px rgba(0,0,0,.2);</pre>
+    </div>
+    <div class="card">
+      <h3><span class="dot"></span>Display</h3>
+      <table>
+        <tr><td>block</td><td>Ocupa todo el ancho</td></tr>
+        <tr><td>inline</td><td>En línea, sin width/height</td></tr>
+        <tr><td>inline-block</td><td>En línea pero dimensionable</td></tr>
+        <tr><td>flex</td><td>Contenedor flexible</td></tr>
+        <tr><td>grid</td><td>Contenedor de rejilla</td></tr>
+        <tr><td>none</td><td>Oculta (no ocupa espacio)</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- FLEXBOX -->
+<section id="flexbox">
+  <div class="sec-head"><span class="sec-num">08</span><h2>Flexbox</h2></div>
+  <div class="grid">
+    <div class="card">
+      <h3><span class="dot"></span>Contenedor padre</h3>
+<pre><span class="c-sel">.flex</span> {
+  <span class="c-prop">display</span>: flex;
+  <span class="c-prop">flex-direction</span>: row | column;
+  <span class="c-prop">justify-content</span>: center;
+    <span class="c-com">// eje principal</span>
+  <span class="c-prop">align-items</span>: center;
+    <span class="c-com">// eje cruzado</span>
+  <span class="c-prop">flex-wrap</span>: wrap;
+  <span class="c-prop">gap</span>: 16px;
+}</pre>
+    </div>
+    <div class="card">
+      <h3><span class="dot"></span>justify-content</h3>
+      <table>
+        <tr><td>flex-start</td><td>Al inicio</td></tr>
+        <tr><td>center</td><td>Centrado</td></tr>
+        <tr><td>flex-end</td><td>Al final</td></tr>
+        <tr><td>space-between</td><td>Extremos + huecos iguales</td></tr>
+        <tr><td>space-around</td><td>Espacio alrededor</td></tr>
+        <tr><td>space-evenly</td><td>Espacio uniforme</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3><span class="dot"></span>Items hijos</h3>
+<pre><span class="c-sel">.item</span> {
+  <span class="c-prop">flex-grow</span>: 1;   <span class="c-com">// crecer</span>
+  <span class="c-prop">flex-shrink</span>: 0; <span class="c-com">// encoger</span>
+  <span class="c-prop">flex-basis</span>: 200px;
+  <span class="c-prop">flex</span>: 1 1 auto; <span class="c-com">// abreviado</span>
+  <span class="c-prop">align-self</span>: flex-end;
+  <span class="c-prop">order</span>: 2;
+}</pre>
+    </div>
+  </div>
+</section>
+
+<!-- GRID -->
+<section id="grid">
+  <div class="sec-head"><span class="sec-num">09</span><h2>CSS Grid</h2></div>
+  <div class="grid">
+    <div class="card">
+      <h3><span class="dot"></span>Definir la rejilla</h3>
+<pre><span class="c-sel">.grid</span> {
+  <span class="c-prop">display</span>: grid;
+  <span class="c-prop">grid-template-columns</span>: 1fr 2fr 1fr;
+  <span class="c-prop">grid-template-rows</span>: auto 1fr;
+  <span class="c-prop">gap</span>: 20px;
+}</pre>
+    </div>
+    <div class="card">
+      <h3><span class="dot"></span>Columnas automáticas</h3>
+<pre><span class="c-com">// rejilla responsive sin media query</span>
+<span class="c-prop">grid-template-columns</span>:
+  repeat(<span class="c-val">auto-fill</span>,
+    minmax(<span class="c-val">200px</span>, 1fr));
+
+<span class="c-com">// repetir N columnas iguales</span>
+<span class="c-prop">grid-template-columns</span>: repeat(3, 1fr);</pre>
+    </div>
+    <div class="card">
+      <h3><span class="dot"></span>Posicionar items</h3>
+<pre><span class="c-sel">.item</span> {
+  <span class="c-prop">grid-column</span>: 1 / 3;  <span class="c-com">// de línea 1 a 3</span>
+  <span class="c-prop">grid-row</span>: span 2;    <span class="c-com">// ocupa 2 filas</span>
+  <span class="c-prop">grid-column</span>: 1 / -1; <span class="c-com">// todo el ancho</span>
+}
+
+<span class="c-sel">.grid</span> {
+  <span class="c-prop">place-items</span>: center; <span class="c-com">// centra todo</span>
+}</pre>
+    </div>
+  </div>
+</section>
+
+<!-- POSICION -->
+<section id="posicion">
+  <div class="sec-head"><span class="sec-num">10</span><h2>Posicionamiento</h2></div>
+  <div class="grid">
+    <div class="card">
+      <h3><span class="dot"></span>position</h3>
+      <table>
+        <tr><td>static</td><td>Por defecto, flujo normal</td></tr>
+        <tr><td>relative</td><td>Relativo a su posición original</td></tr>
+        <tr><td>absolute</td><td>Relativo al ancestro posicionado</td></tr>
+        <tr><td>fixed</td><td>Relativo a la ventana</td></tr>
+        <tr><td>sticky</td><td>Pegajoso al hacer scroll</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3><span class="dot"></span>Ejemplos</h3>
+<pre><span class="c-sel">.fijo</span> {
+  <span class="c-prop">position</span>: fixed;
+  <span class="c-prop">top</span>: 0; <span class="c-prop">left</span>: 0;
+  <span class="c-prop">z-index</span>: 100;
+}
+<span class="c-sel">.pegajoso</span> {
+  <span class="c-prop">position</span>: sticky;
+  <span class="c-prop">top</span>: 20px;
+}
+<span class="c-com">// centrar absoluto</span>
+<span class="c-prop">top</span>: 50%; <span class="c-prop">left</span>: 50%;
+<span class="c-prop">transform</span>: translate(-50%, -50%);</pre>
+    </div>
+  </div>
+</section>
+
+<!-- TIPOGRAFIA -->
+<section id="tipografia">
+  <div class="sec-head"><span class="sec-num">11</span><h2>Tipografía</h2></div>
+  <div class="grid">
+    <div class="card">
+      <h3><span class="dot"></span>Propiedades</h3>
+<pre><span class="c-prop">font-family</span>: 'Outfit', sans-serif;
+<span class="c-prop">font-size</span>: 1.2rem;
+<span class="c-prop">font-weight</span>: 700;
+<span class="c-prop">line-height</span>: 1.6;
+<span class="c-prop">letter-spacing</span>: -0.5px;
+<span class="c-prop">text-align</span>: center;
+<span class="c-prop">text-transform</span>: uppercase;
+<span class="c-prop">text-decoration</span>: underline;
+<span class="c-prop">font-style</span>: italic;</pre>
+    </div>
+    <div class="card">
+      <h3><span class="dot"></span>Unidades</h3>
+      <table>
+        <tr><td>px</td><td>Píxeles absolutos</td></tr>
+        <tr><td>rem</td><td>Relativo al root (1rem=16px)</td></tr>
+        <tr><td>em</td><td>Relativo al padre</td></tr>
+        <tr><td>%</td><td>Porcentaje del contenedor</td></tr>
+        <tr><td>vw / vh</td><td>% del viewport</td></tr>
+        <tr><td>ch</td><td>Ancho del carácter "0"</td></tr>
+        <tr><td>clamp()</td><td>clamp(min, ideal, max)</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3><span class="dot"></span>Truncar texto</h3>
+<pre><span class="c-com">// una línea con ...</span>
+<span class="c-prop">white-space</span>: nowrap;
+<span class="c-prop">overflow</span>: hidden;
+<span class="c-prop">text-overflow</span>: ellipsis;
+
+<span class="c-com">// varias líneas</span>
+<span class="c-prop">display</span>: -webkit-box;
+<span class="c-prop">-webkit-line-clamp</span>: 3;
+<span class="c-prop">-webkit-box-orient</span>: vertical;
+<span class="c-prop">overflow</span>: hidden;</pre>
+    </div>
+  </div>
+</section>
+
+<!-- COLORES -->
+<section id="colores">
+  <div class="sec-head"><span class="sec-num">12</span><h2>Colores y fondos</h2></div>
+  <div class="grid">
+    <div class="card">
+      <h3><span class="dot"></span>Formatos de color</h3>
+<pre><span class="c-prop">color</span>: #e8a13a;
+<span class="c-prop">color</span>: rgb(232 161 58);
+<span class="c-prop">color</span>: rgba(232,161,58,.5);
+<span class="c-prop">color</span>: hsl(38, 80%, 57%);
+<span class="c-prop">color</span>: hsla(38,80%,57%,.5);</pre>
+    </div>
+    <div class="card">
+      <h3><span class="dot"></span>Fondos</h3>
+<pre><span class="c-prop">background-color</span>: #16140f;
+<span class="c-prop">background-image</span>: url('bg.jpg');
+<span class="c-prop">background-size</span>: cover;
+<span class="c-prop">background-position</span>: center;
+<span class="c-prop">background-repeat</span>: no-repeat;
+<span class="c-prop">background</span>: linear-gradient(
+  135deg, #e8a13a, #e8674c);
+<span class="c-prop">background</span>: radial-gradient(
+  circle, #fff, #000);</pre>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSICIONES -->
+<section id="transiciones">
+  <div class="sec-head"><span class="sec-num">13</span><h2>Transiciones y animaciones</h2></div>
+  <div class="grid">
+    <div class="card">
+      <h3><span class="dot"></span>Transition</h3>
+<pre><span class="c-sel">.btn</span> {
+  <span class="c-prop">transition</span>: all .3s ease;
+  <span class="c-com">// prop duración timing delay</span>
+  <span class="c-prop">transition</span>: transform .2s
+    ease-in-out .1s;
+}
+<span class="c-sel">.btn</span><span class="c-sel">:hover</span> {
+  <span class="c-prop">transform</span>: scale(1.05);
+}</pre>
+    </div>
+    <div class="card">
+      <h3><span class="dot"></span>Transform</h3>
+<pre><span class="c-prop">transform</span>: translate(10px, 20px);
+<span class="c-prop">transform</span>: scale(1.2);
+<span class="c-prop">transform</span>: rotate(45deg);
+<span class="c-prop">transform</span>: skew(10deg);
+<span class="c-com">// combinadas</span>
+<span class="c-prop">transform</span>: translateY(-4px)
+  rotate(3deg) scale(1.1);</pre>
+    </div>
+    <div class="card">
+      <h3><span class="dot"></span>Keyframes</h3>
+<pre><span class="c-sel">@keyframes</span> aparecer {
+  <span class="c-val">from</span> { <span class="c-prop">opacity</span>: 0; }
+  <span class="c-val">to</span>   { <span class="c-prop">opacity</span>: 1; }
+}
+<span class="c-sel">.elem</span> {
+  <span class="c-prop">animation</span>: aparecer 1s ease
+    infinite alternate;
+}</pre>
+    </div>
+  </div>
+</section>
+
+<!-- RESPONSIVE -->
+<section id="responsive">
+  <div class="sec-head"><span class="sec-num">14</span><h2>Responsive</h2></div>
+  <div class="grid">
+    <div class="card">
+      <h3><span class="dot"></span>Media queries</h3>
+<pre><span class="c-com">// móvil primero</span>
+<span class="c-sel">@media</span> (min-width: 768px) {
+  <span class="c-sel">.grid</span> { <span class="c-prop">grid-template-columns</span>: 1fr 1fr; }
+}
+<span class="c-sel">@media</span> (max-width: 600px) {
+  <span class="c-sel">.nav</span> { <span class="c-prop">display</span>: none; }
+}
+<span class="c-sel">@media</span> (prefers-color-scheme: dark) {
+  <span class="c-sel">body</span> { <span class="c-prop">background</span>: #000; }
+}</pre>
+    </div>
+    <div class="card">
+      <h3><span class="dot"></span>Breakpoints típicos</h3>
+      <table>
+        <tr><td>&lt; 640px</td><td>Móvil</td></tr>
+        <tr><td>640–768px</td><td>Móvil grande</td></tr>
+        <tr><td>768–1024px</td><td>Tablet</td></tr>
+        <tr><td>1024–1280px</td><td>Laptop</td></tr>
+        <tr><td>&gt; 1280px</td><td>Escritorio</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- VARIABLES -->
+<section id="variables">
+  <div class="sec-head"><span class="sec-num">15</span><h2>Variables CSS</h2></div>
+  <div class="grid">
+    <div class="card full">
+      <h3><span class="dot"></span>Custom properties</h3>
+<pre><span class="c-sel">:root</span> {
+  <span class="c-prop">--color-principal</span>: #e8a13a;
+  <span class="c-prop">--espacio</span>: 16px;
+  <span class="c-prop">--radio</span>: 12px;
+}
+
+<span class="c-sel">.tarjeta</span> {
+  <span class="c-prop">color</span>: <span class="c-val">var(--color-principal)</span>;
+  <span class="c-prop">padding</span>: <span class="c-val">var(--espacio)</span>;
+  <span class="c-prop">border-radius</span>: <span class="c-val">var(--radio, 8px)</span>; <span class="c-com">// con fallback</span>
+}
+
+<span class="c-com">// también se pueden cambiar con JS o en media queries</span></pre>
+    </div>
+  </div>
+</section>
+
+<!-- TRUCOS -->
+<section id="trucos">
+  <div class="sec-head"><span class="sec-num">16</span><h2>Trucos imprescindibles</h2></div>
+  <div class="grid">
+    <div class="card">
+      <h3><span class="dot"></span>Centrar perfectamente</h3>
+<pre><span class="c-sel">.centro</span> {
+  <span class="c-prop">display</span>: grid;
+  <span class="c-prop">place-items</span>: center;
+  <span class="c-prop">min-height</span>: 100vh;
+}</pre>
+    </div>
+    <div class="card">
+      <h3><span class="dot"></span>Contenedor centrado</h3>
+<pre><span class="c-sel">.container</span> {
+  <span class="c-prop">max-width</span>: 1200px;
+  <span class="c-prop">margin-inline</span>: auto;
+  <span class="c-prop">padding-inline</span>: 1rem;
+}</pre>
+    </div>
+    <div class="card">
+      <h3><span class="dot"></span>Aspect ratio</h3>
+<pre><span class="c-sel">.video</span> {
+  <span class="c-prop">aspect-ratio</span>: 16 / 9;
+  <span class="c-prop">width</span>: 100%;
+}</pre>
+    </div>
+    <div class="card">
+      <h3><span class="dot"></span>Scroll suave</h3>
+<pre><span class="c-sel">html</span> {
+  <span class="c-prop">scroll-behavior</span>: smooth;
+}</pre>
+    </div>
+    <div class="card">
+      <h3><span class="dot"></span>Backdrop blur (glass)</h3>
+<pre><span class="c-sel">.glass</span> {
+  <span class="c-prop">background</span>: rgba(255,255,255,.1);
+  <span class="c-prop">backdrop-filter</span>: blur(12px);
+}</pre>
+    </div>
+    <div class="card">
+      <h3><span class="dot"></span>Grid responsive mágico</h3>
+<pre><span class="c-prop">grid-template-columns</span>:
+  repeat(auto-fit,
+    minmax(min(100%, 250px), 1fr));</pre>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <span>Cheatsheet HTML &amp; CSS · <span class="amber">Referencia rápida</span></span>
+  <span>Hecho para Juanan</span>
+</footer>
+
+</body>
+</html>
